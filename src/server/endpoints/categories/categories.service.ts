@@ -1,0 +1,48 @@
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+
+import { DeleteResult, Repository } from 'typeorm';
+
+import { CreateCategoryInput } from './dto/create-category.input';
+import { UpdateCategoryInput } from './dto/update-category.input';
+import { Category } from './entities/category.entity';
+
+@Injectable()
+export class CategoriesService {
+  constructor(
+    @InjectRepository(Category)
+    private readonly categoryRepository: Repository<Category>,
+  ) {}
+
+  public async create(createCategory: CreateCategoryInput): Promise<Category> {
+    const category = this.categoryRepository.create(createCategory);
+
+    if (category) {
+      return await this.categoryRepository.save(category);
+    }
+  }
+
+  public async findAll(): Promise<Category[]> {
+    return await this.categoryRepository.find();
+  }
+
+  public async findOneById(id: string): Promise<Category> {
+    return await this.categoryRepository.findOne({ where: { id: id } });
+  }
+
+  public async update(updateCategory: UpdateCategoryInput): Promise<Category> {
+    const category = await this.categoryRepository.preload({ id: updateCategory.id });
+
+    if (category) {
+      return await this.categoryRepository.save(Object.assign(category, updateCategory));
+    }
+  }
+
+  public async remove(id: string): Promise<DeleteResult> {
+    const category = await this.categoryRepository.preload({ id: id });
+
+    if (category) {
+      return await this.categoryRepository.delete(category.id);
+    }
+  }
+}
