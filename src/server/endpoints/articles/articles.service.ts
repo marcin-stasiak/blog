@@ -11,36 +11,44 @@ import { Article } from './entities/article.entity';
 export class ArticlesService {
   constructor(
     @InjectRepository(Article)
-    private readonly articleRepository: Repository<Article>,
+    private readonly repository: Repository<Article>,
   ) {}
 
   public async create(createArticle: CreateArticleInput): Promise<Article> {
-    const article = this.articleRepository.create(createArticle);
+    const article = this.repository.create(createArticle);
 
-    return await this.articleRepository.save(article);
+    return await this.repository.save(article);
   }
 
-  public async findAll(): Promise<Article[]> {
-    return await this.articleRepository.find();
+  public async findAll(limit: number = 30, offset: number = 0): Promise<Article[]> {
+    return await this.repository.find({ take: limit, skip: offset });
   }
 
   public async findOneById(id: string): Promise<Article> {
-    return await this.articleRepository.findOne({ where: { id: id } });
+    return await this.repository.findOne({ where: { id: id } });
+  }
+
+  public async findOneBySlug(slug: string): Promise<Article> {
+    return await this.repository.findOne({ where: { slug: slug } });
   }
 
   public async update(updateArticle: UpdateArticleInput): Promise<Article> {
-    const article = await this.articleRepository.preload({ id: updateArticle.id });
+    const article = await this.repository.preload({ id: updateArticle.id });
 
     if (article) {
-      return await this.articleRepository.save(Object.assign(article, updateArticle));
+      return await this.repository.save(Object.assign(article, updateArticle));
     }
   }
 
   public async remove(id: string): Promise<DeleteResult> {
-    const article = await this.articleRepository.preload({ id: id });
+    const article = await this.repository.preload({ id: id });
 
     if (article) {
-      return await this.articleRepository.delete(article.id);
+      return await this.repository.delete(article.id);
     }
+  }
+
+  public async count(): Promise<Number> {
+    return await this.repository.count();
   }
 }

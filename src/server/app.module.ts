@@ -12,6 +12,7 @@ import serverConfig from './configs/server.config';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthorizationsModule } from './authorizations/authorizations.module';
 import { ArticlesModule } from './endpoints/articles/articles.module';
 import { CategoriesModule } from './endpoints/categories/categories.module';
 import { SettingsModule } from './endpoints/settings/settings.module';
@@ -28,7 +29,7 @@ import { UsersModule } from './endpoints/users/users.module';
       imports: [ConfigModule],
       useFactory: (config: ConfigService) =>
         ({
-          autoSchemaFile: true,
+          autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
           playground: config.get('development'),
         }) as GqlModuleOptions,
       inject: [ConfigService],
@@ -50,6 +51,7 @@ import { UsersModule } from './endpoints/users/users.module';
         }) as TypeOrmModuleOptions,
       inject: [ConfigService],
     }),
+    AuthorizationsModule,
     // Endpoints
     ArticlesModule,
     CategoriesModule,

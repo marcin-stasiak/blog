@@ -10,22 +10,22 @@ import { Setting } from './entities/setting.entity';
 export class SettingsService {
   constructor(
     @InjectRepository(Setting)
-    private readonly settingRepository: Repository<Setting>,
+    private readonly repository: Repository<Setting>,
   ) {}
 
   public async findAll(): Promise<Setting[]> {
-    return await this.settingRepository.find();
+    return await this.repository.find();
   }
 
   public async findOneById(id: string): Promise<Setting> {
-    return await this.settingRepository.findOne({ where: { id: id } });
+    return await this.repository.findOne({ where: { id: id } });
   }
 
   public async update(updateSetting: UpdateSettingInput): Promise<Setting> {
-    const setting = await this.settingRepository.preload({ id: updateSetting.id });
+    const setting = await this.repository.preload({ id: updateSetting.id });
 
     if (setting) {
-      return await this.settingRepository.save(Object.assign(setting, updateSetting));
+      return await this.repository.save(Object.assign(setting, updateSetting));
     }
   }
 }

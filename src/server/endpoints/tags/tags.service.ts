@@ -20,12 +20,16 @@ export class TagsService {
     return await this.repository.save(tag);
   }
 
-  public async findAll(): Promise<Tag[]> {
-    return await this.repository.find();
+  public async findAll(limit: number = 30, offset: number = 0): Promise<Tag[]> {
+    return await this.repository.find({ take: limit, skip: offset });
   }
 
   public async findOneById(id: string): Promise<Tag> {
     return await this.repository.findOne({ where: { id: id } });
+  }
+
+  public async findOneBySlug(slug: string): Promise<Tag> {
+    return await this.repository.findOne({ where: { slug: slug } });
   }
 
   public async update(updateTag: UpdateTagInput): Promise<Tag> {
@@ -42,5 +46,9 @@ export class TagsService {
     if (tag) {
       return await this.repository.delete(tag.id);
     }
+  }
+
+  public async count(): Promise<Number> {
+    return await this.repository.count();
   }
 }

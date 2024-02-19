@@ -1,0 +1,9 @@
+mutation($createTagInput: CreateTagInput!) {
+    createTag(createTagInput: $createTagInput) {
+        id
+        slug
+        title
+        createDate
+        updateDate
+    }
+}

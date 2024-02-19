@@ -1,0 +1,15 @@
+import { Html, Head, Main, NextScript } from 'next/document'
+
+export default function Document() {
+  const language = process.env.NEXT_LANGUAGE;
+
+  return (
+    <Html lang={language}>
+      <Head />
+      <body className="bg-white text-black dark:bg-black dark:text-white">
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
+  )
+}

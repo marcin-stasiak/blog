@@ -1,0 +1,9 @@
+query($slug: String!) {
+    category(slug: $slug) {
+        id
+        slug
+        title
+        createDate
+        updateDate
+    }
+}

@@ -12,4 +12,8 @@ export class Setting extends BaseEntity {
   @Field(() => String)
   @Column()
   public path: string;
+
+  @Field(() => String)
+  @Column()
+  public value: string;
 }

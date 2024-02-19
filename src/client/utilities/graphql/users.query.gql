@@ -1,0 +1,11 @@
+query($limit: Float!, $offset: Float!) {
+    users(limit: $limit, offset: $offset) {
+        id
+        slug
+        username
+        createDate
+        updateDate
+        gender
+    }
+    countUsers
+}

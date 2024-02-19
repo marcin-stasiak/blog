@@ -1,0 +1,13 @@
+query($limit: Float!, $offset: Float!) {
+    articles(limit: $limit, offset: $offset) {
+        id
+        slug
+        title
+        excerpt
+        content
+        createDate
+        updateDate
+        status
+    }
+    countArticles
+}
