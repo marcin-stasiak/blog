@@ -2,6 +2,7 @@ import { NextPage } from 'next';
 import { CategoryInterface } from '../../interfaces/category.interface';
 import client from '../../utilities/client';
 import CATEGORY_QUERY from '../../utilities/graphql/category.query.gql';
+import {Head} from '../../components/head';
 
 interface CategoryPagePropsInterface {
   category: CategoryInterface;
@@ -10,6 +11,8 @@ interface CategoryPagePropsInterface {
 const CategoryPage: NextPage<CategoryPagePropsInterface> = ({category}) => {
   return (
     <>
+      <Head />
+
       <h1>{category.title}</h1>
     </>
   );

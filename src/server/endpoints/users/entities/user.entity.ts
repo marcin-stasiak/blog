@@ -1,11 +1,12 @@
 import { ObjectType, Field } from '@nestjs/graphql';
 
-import { Column, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 import { UserGender } from '../dto/user-gender.enum';
 
 @ObjectType()
-export class User {
+@Entity('users')
+export class User extends BaseEntity {
   @Field(() => String)
   @PrimaryGeneratedColumn('uuid')
   public id: string;
@@ -15,9 +16,10 @@ export class User {
   public slug: string;
 
   @Field(() => String)
-  @Column()
+  @Column({ unique: true })
   public username: string;
 
+  // @Column({ select: false })
   @Column()
   public password: string;
 

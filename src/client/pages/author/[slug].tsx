@@ -3,6 +3,7 @@ import { NextPage } from 'next';
 import USER_QUERY from '../../utilities/graphql/user.query.gql';
 import { UserInterface } from '../../interfaces/user.interface';
 import client from '../../utilities/client';
+import {Head} from '../../components/head';
 
 interface AuthorPagePropsInterface {
   user: UserInterface;
@@ -11,6 +12,8 @@ interface AuthorPagePropsInterface {
 const AuthorPage: NextPage<AuthorPagePropsInterface> = ({user}) => {
   return (
     <>
+      <Head />
+
       <h1>{user.username}</h1>
     </>
   );

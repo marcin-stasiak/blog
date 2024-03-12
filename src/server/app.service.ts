@@ -7,7 +7,7 @@ import { NextServer } from 'next/dist/server/next';
 @Injectable()
 export class AppService implements OnModuleInit {
   private readonly logger: Logger;
-  private server: NextServer;
+  private instance: NextServer;
 
   constructor(private readonly config: ConfigService) {
     this.logger = new Logger(AppService.name);
@@ -15,18 +15,18 @@ export class AppService implements OnModuleInit {
 
   public async onModuleInit(): Promise<void> {
     try {
-      this.server = createClient({
+      this.instance = createClient({
         dev: this.config.get('development'),
         dir: './src/client',
       });
-      await this.server.prepare();
+
+      await this.instance.prepare();
     } catch (error) {
-      console.log(error);
       this.logger.error(error.message);
     }
   }
 
-  public nextServer(): NextServer {
-    return this.server;
+  public client(): NextServer {
+    return this.instance;
   }
 }

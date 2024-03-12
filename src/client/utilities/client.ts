@@ -1,11 +1,9 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 
-console.log(`${process.env.NEXT_DOMAIN}/graphql`);
-
 const client = new ApolloClient({
   ssrMode: typeof window === 'undefined',
   link: createHttpLink({
-    uri: `${process.env.NEXT_URL}/graphql`,
+    uri: `${process.env.APP_URL || location.origin}/graphql`,
     credentials: 'same-origin',
     // headers: {
     //   cookie: req.header('Cookie'),

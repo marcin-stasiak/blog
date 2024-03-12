@@ -2,6 +2,7 @@ import { NextPage } from 'next';
 import client from '../../utilities/client';
 import TAG_QUERY from '../../utilities/graphql/tag.query.gql';
 import { TagInterface } from '../../interfaces/tag.interface';
+import {Head} from '../../components/head';
 
 interface TagPagePropsInterface {
   tag: TagInterface;
@@ -10,6 +11,8 @@ interface TagPagePropsInterface {
 const TagPage: NextPage<TagPagePropsInterface> = ({tag}) => {
   return (
     <>
+      <Head />
+
       <h1>{tag.title}</h1>
     </>
   );

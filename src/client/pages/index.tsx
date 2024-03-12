@@ -2,6 +2,7 @@ import { NextPage } from 'next';
 import ARTICLES_QUERY from '../utilities/graphql/articles.query.gql';
 import client from '../utilities/client';
 import { ArticleInterface } from '../interfaces/article.interface';
+import {Head} from '../components/head';
 
 interface IndexPagePropsInterface {
   articles: ArticleInterface[]
@@ -11,6 +12,8 @@ interface IndexPagePropsInterface {
 const IndexPage: NextPage<IndexPagePropsInterface> = ({articles, countArticles}) => {
   return (
     <>
+      <Head/>
+
       {articles.map(article => {
         return (
           <div  key={article.id}>

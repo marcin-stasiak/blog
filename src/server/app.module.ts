@@ -6,7 +6,7 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 import { join } from 'path';
 
-import applicationConfig from './configs/application.config';
+import appConfig from './configs/app.config';
 import databaseConfig from './configs/database.config';
 import serverConfig from './configs/server.config';
 
@@ -22,7 +22,7 @@ import { UsersModule } from './endpoints/users/users.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [applicationConfig, databaseConfig, serverConfig],
+      load: [appConfig, databaseConfig, serverConfig],
     }),
     GraphQLModule.forRootAsync({
       driver: ApolloDriver,

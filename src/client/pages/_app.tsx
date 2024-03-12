@@ -4,11 +4,14 @@ import '../styles/globals.css';
 
 import client from '../utilities/client';
 import { ApolloProvider } from '@apollo/client';
+import { NextUIProvider } from '@nextui-org/react';
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
     <ApolloProvider client={client}>
-      <Component {...pageProps} />
+      <NextUIProvider>
+        <Component {...pageProps} />
+      </NextUIProvider>
     </ApolloProvider>
   )
 }
