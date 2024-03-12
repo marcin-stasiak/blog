@@ -20,12 +20,20 @@ export class UsersService {
     return await this.repository.save(user);
   }
 
-  public async findAll(): Promise<User[]> {
-    return await this.repository.find();
+  public async findAll(limit: number = 30, offset: number = 0): Promise<User[]> {
+    return await this.repository.find({ take: limit, skip: offset });
   }
 
   public async findOneById(id: string): Promise<User> {
     return await this.repository.findOne({ where: { id: id } });
+  }
+
+  public async findOneBySlug(slug: string): Promise<User> {
+    return await this.repository.findOne({ where: { slug: slug } });
+  }
+
+  public async findOneByUsername(username: string): Promise<User> {
+    return await this.repository.findOne({ where: { username: username } });
   }
 
   public async update(updateUser: UpdateUserInput): Promise<User> {
@@ -42,5 +50,9 @@ export class UsersService {
     if (user) {
       return await this.repository.delete(user.id);
     }
+  }
+
+  public async count(): Promise<Number> {
+    return await this.repository.count();
   }
 }

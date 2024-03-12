@@ -15,13 +15,16 @@ export class TagsResolver {
   }
 
   @Query(() => [Tag], { name: 'tags' })
-  public findAll() {
-    return this.tagsService.findAll();
+  public findAll(
+    @Args('limit', { type: () => Number, defaultValue: 30 }) limit: number,
+    @Args('offset', { type: () => Number, defaultValue: 0 }) offset: number,
+  ) {
+    return this.tagsService.findAll(limit, offset);
   }
 
   @Query(() => Tag, { name: 'tag' })
-  public findOne(@Args('id', { type: () => String }) id: string) {
-    return this.tagsService.findOneById(id);
+  public findOne(@Args('slug', { type: () => String }) slug: string) {
+    return this.tagsService.findOneBySlug(slug);
   }
 
   @Mutation(() => Tag)
@@ -32,5 +35,10 @@ export class TagsResolver {
   @Mutation(() => Tag)
   public removeTag(@Args('id', { type: () => String }) id: string) {
     return this.tagsService.remove(id);
+  }
+
+  @Query(() => Number, { name: 'countTags' })
+  public count() {
+    return this.tagsService.count();
   }
 }

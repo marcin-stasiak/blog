@@ -1,4 +1,4 @@
-import { Controller, Get, Next, Req, Res } from '@nestjs/common';
+import { Controller, Get, Next, Param, Req, Res } from '@nestjs/common';
 
 import { Request, Response } from 'express';
 import { parse } from 'url';
@@ -10,12 +10,12 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get('*')
-  public async assets(@Req() request: Request, @Res() response: Response, @Next() next) {
+  public async client(@Req() request: Request, @Res() response: Response, @Next() next): Promise<void> {
     if (request.path === '/graphql') {
       next();
     }
 
     const parsedUrl = parse(request.url, true);
-    await this.appService.nextServer().render(request, response, parsedUrl.pathname, parsedUrl.query);
+    await this.appService.client().render(request, response, parsedUrl.pathname, parsedUrl.query);
   }
 }

@@ -1,0 +1,10 @@
+query($limit: Float!, $offset: Float!) {
+    tags(limit: $limit, offset: $offset) {
+        id
+        slug
+        title
+        createDate
+        updateDate
+    }
+    countTags
+}

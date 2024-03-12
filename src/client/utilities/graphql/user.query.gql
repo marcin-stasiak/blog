@@ -1,0 +1,10 @@
+query($slug: String!) {
+    user(slug: $slug) {
+        id
+        slug
+        username
+        createDate
+        updateDate
+        gender
+    }
+}

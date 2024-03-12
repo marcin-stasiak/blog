@@ -1,8 +1,16 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+
+module.exports = {
   distDir: '../../dist/client',
   reactStrictMode: true,
   swcMinify: true,
-};
+  webpack: (config, options) => {
+    config.module.rules.push({
+      test: /\.(graphql|gql)/,
+      exclude: /node_modules/,
+      loader: "graphql-tag/loader"
+    })
 
-module.exports = nextConfig;
+    return config
+  }
+};

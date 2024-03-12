@@ -6,12 +6,13 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 import { join } from 'path';
 
-import applicationConfig from './configs/application.config';
+import appConfig from './configs/app.config';
 import databaseConfig from './configs/database.config';
 import serverConfig from './configs/server.config';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthorizationsModule } from './authorizations/authorizations.module';
 import { ArticlesModule } from './endpoints/articles/articles.module';
 import { CategoriesModule } from './endpoints/categories/categories.module';
 import { SettingsModule } from './endpoints/settings/settings.module';
@@ -21,14 +22,14 @@ import { UsersModule } from './endpoints/users/users.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [applicationConfig, databaseConfig, serverConfig],
+      load: [appConfig, databaseConfig, serverConfig],
     }),
     GraphQLModule.forRootAsync({
       driver: ApolloDriver,
       imports: [ConfigModule],
       useFactory: (config: ConfigService) =>
         ({
-          autoSchemaFile: true,
+          autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
           playground: config.get('development'),
         }) as GqlModuleOptions,
       inject: [ConfigService],
@@ -50,6 +51,7 @@ import { UsersModule } from './endpoints/users/users.module';
         }) as TypeOrmModuleOptions,
       inject: [ConfigService],
     }),
+    AuthorizationsModule,
     // Endpoints
     ArticlesModule,
     CategoriesModule,

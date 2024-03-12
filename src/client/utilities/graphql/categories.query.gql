@@ -1,0 +1,10 @@
+query($limit: Float!, $offset: Float!) {
+    categories(limit: $limit, offset: $offset) {
+        id
+        slug
+        title
+        createDate
+        updateDate
+    }
+    countCategories
+}

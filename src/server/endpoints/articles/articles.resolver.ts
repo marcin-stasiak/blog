@@ -15,13 +15,16 @@ export class ArticlesResolver {
   }
 
   @Query(() => [Article], { name: 'articles' })
-  public findAll() {
-    return this.articlesService.findAll();
+  public findAll(
+    @Args('limit', { type: () => Number, defaultValue: 30 }) limit: number,
+    @Args('offset', { type: () => Number, defaultValue: 0 }) offset: number,
+  ) {
+    return this.articlesService.findAll(limit, offset);
   }
 
   @Query(() => Article, { name: 'article' })
-  public findOne(@Args('id', { type: () => String }) id: string) {
-    return this.articlesService.findOneById(id);
+  public findOne(@Args('slug', { type: () => String }) slug: string) {
+    return this.articlesService.findOneBySlug(slug);
   }
 
   @Mutation(() => Article)
@@ -32,5 +35,10 @@ export class ArticlesResolver {
   @Mutation(() => Article)
   public removeArticle(@Args('id', { type: () => String }) id: string) {
     return this.articlesService.remove(id);
+  }
+
+  @Query(() => Number, { name: 'countArticles' })
+  public count() {
+    return this.articlesService.count();
   }
 }

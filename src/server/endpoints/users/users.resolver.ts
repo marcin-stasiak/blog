@@ -15,13 +15,16 @@ export class UsersResolver {
   }
 
   @Query(() => [User], { name: 'users' })
-  public findAll() {
-    return this.usersService.findAll();
+  public findAll(
+    @Args('limit', { type: () => Number, defaultValue: 30 }) limit: number,
+    @Args('offset', { type: () => Number, defaultValue: 0 }) offset: number,
+  ) {
+    return this.usersService.findAll(limit, offset);
   }
 
   @Query(() => User, { name: 'user' })
-  public findOne(@Args('id', { type: () => String }) id: string) {
-    return this.usersService.findOneById(id);
+  public findOne(@Args('slug', { type: () => String }) slug: string) {
+    return this.usersService.findOneBySlug(slug);
   }
 
   @Mutation(() => User)
@@ -32,5 +35,10 @@ export class UsersResolver {
   @Mutation(() => User)
   public removeUser(@Args('id', { type: () => String }) id: string) {
     return this.usersService.remove(id);
+  }
+
+  @Query(() => Number, { name: 'countUsers' })
+  public count() {
+    return this.usersService.count();
   }
 }
