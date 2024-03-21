@@ -1,16 +1,33 @@
 import { NextPage } from 'next';
-import { useState } from 'react';
-import {Head} from '../../components/head';
+import { Head } from '../../components/head';
+import { Tabs, Tab, Card, CardBody} from '@nextui-org/react';
+import { Register } from '../../components/register';
+import { Login } from '../../components/login';
 
 const LoginPage: NextPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
   return (
     <>
       <Head />
 
-      Login
+      <div className="w-full md:w-2/3 lg:w-1/3 xl:w-1/4 max-w-screen-2xl">
+        <Tabs fullWidth>
+          <Tab key="login" title="Login">
+            <Card>
+              <CardBody>
+                <Login/>
+              </CardBody>
+            </Card>
+          </Tab>
+          <Tab key="register" title="Register">
+            <Card>
+              <CardBody>
+                <Register/>
+              </CardBody>
+            </Card>
+          </Tab>
+        </Tabs>
+      </div>
     </>
   );
 };

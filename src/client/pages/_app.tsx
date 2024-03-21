@@ -13,7 +13,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   return (
     <ApolloProvider client={client}>
-      <NextUIProvider navigate={router.push}>
+      <NextUIProvider className="flex flex-col justify-between min-h-screen" navigate={router.push}>
         <Layout>
           <Component {...pageProps} />
         </Layout>

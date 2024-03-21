@@ -15,7 +15,7 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Navbar onMenuOpenChange={setIsOpen}>
+    <Navbar maxWidth="2xl" onMenuOpenChange={setIsOpen}>
       <NavbarBrand>
         <Link href="/" className="font-bold text-inherit">Blog</Link>
       </NavbarBrand>

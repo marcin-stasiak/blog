@@ -9,7 +9,9 @@ const Layout = ({ children }: PropsInterface) => {
   return (
     <>
       <Header/>
+      <main className="flex flex-col grow items-center w-full">
         {children}
+      </main>
       <Footer/>
     </>
   )
