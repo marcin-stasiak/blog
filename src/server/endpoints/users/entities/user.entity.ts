@@ -17,11 +17,15 @@ export class User extends BaseEntity {
 
   @Field(() => String)
   @Column({ unique: true })
-  public username: string;
+  public email: string;
 
   // @Column({ select: false })
   @Column()
   public password: string;
+
+  @Field(() => UserGender)
+  @Column({ type: 'enum', enum: UserGender, default: UserGender.Male })
+  public gender: UserGender;
 
   @Field(() => Date)
   @CreateDateColumn({ name: 'create_date' })
@@ -30,8 +34,4 @@ export class User extends BaseEntity {
   @Field(() => Date)
   @UpdateDateColumn({ name: 'update_date' })
   public updateDate: Date;
-
-  @Field(() => UserGender)
-  @Column({ type: 'enum', enum: UserGender, default: UserGender.Male })
-  public gender: UserGender;
 }

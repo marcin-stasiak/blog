@@ -31,14 +31,21 @@ export class AuthorizationsService {
     // TODO: pass user from context in resolver
     // TODO: implement access and refresh tokens
     console.log('login');
-    const user = await this.usersService.findOneByUsername(loginInput.username);
+    const { id, email, password, slug, gender, createDate, updateDate } = await this.usersService.findOneByUsername(
+      loginInput.username,
+    );
 
     return {
       accessToken: this.jwtService.sign({
-        id: user.id,
-        username: user.username,
+        id: id,
+        email: email,
       }),
-      user: user,
+      user: {
+        slug,
+        gender,
+        createDate,
+        updateDate,
+      },
     };
   }
 

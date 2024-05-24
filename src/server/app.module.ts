@@ -1,4 +1,4 @@
-import { ApolloDriver } from '@nestjs/apollo';
+import { ApolloDriver, ApolloDriverConfig, ApolloDriverConfigFactory } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GqlModuleOptions, GraphQLModule } from '@nestjs/graphql';
@@ -24,14 +24,13 @@ import { UsersModule } from './endpoints/users/users.module';
     ConfigModule.forRoot({
       load: [appConfig, databaseConfig, serverConfig],
     }),
-    GraphQLModule.forRootAsync({
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
       imports: [ConfigModule],
-      useFactory: (config: ConfigService) =>
-        ({
-          autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-          playground: config.get('development'),
-        }) as GqlModuleOptions,
+      useFactory: (config: ConfigService) => ({
+        autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+        playground: config.get('development'),
+      }),
       inject: [ConfigService],
     }),
     TypeOrmModule.forRootAsync({
