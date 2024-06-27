@@ -4,6 +4,7 @@
   "description": "Just another personal blog",
   "author": "Marcin Stasiak",
   "license": "GPL 3.0",
+  "type": "commonjs",
   "scripts": {
     "build": "nest build",
     "start": "nest start",
